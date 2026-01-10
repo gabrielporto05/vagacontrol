@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class VagacontrolApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(VagacontrolApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(VagacontrolApiApplication.class, args);
+    }
 
 }

@@ -47,6 +47,7 @@ public class AuthController {
 
         return ResponseEntity.ok(
                 new UserResponse(
+                        user.getId(),
                         user.getName(),
                         user.getEmail(),
                         user.getRole(),
