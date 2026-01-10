@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Component;
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
@@ -14,7 +15,7 @@ import com.vagacontrol.api.entity.User;
 @Component
 public class TokenConfig {
 
-    private String secretKey = "mySuperSecretKey12345";
+    private final String secretKey = "mySuperSecretKey12345";
 
     public String generateToken(User user) {
 

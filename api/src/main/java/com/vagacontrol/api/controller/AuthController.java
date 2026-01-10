@@ -2,6 +2,7 @@ package com.vagacontrol.api.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,8 @@ import com.vagacontrol.api.dto.request.LoginRequest;
 import com.vagacontrol.api.dto.request.RegisterRequest;
 import com.vagacontrol.api.dto.response.LoginResponse;
 import com.vagacontrol.api.dto.response.RegisterResponse;
+import com.vagacontrol.api.dto.response.UserResponse;
+import com.vagacontrol.api.entity.User;
 import com.vagacontrol.api.service.AuthService;
 
 import jakarta.validation.Valid;
@@ -36,4 +39,18 @@ public class AuthController {
                 .status(HttpStatus.CREATED)
                 .body(authService.register(request));
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> me() {
+
+        User user = authService.me();
+
+        return ResponseEntity.ok(
+                new UserResponse(
+                        user.getName(),
+                        user.getEmail(),
+                        user.getRole(),
+                        user.getCreatedAt()));
+    }
+
 }

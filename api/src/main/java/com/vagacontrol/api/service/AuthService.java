@@ -3,6 +3,7 @@ package com.vagacontrol.api.service;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -53,4 +54,17 @@ public class AuthService {
                 user.getEmail(),
                 user.getRole());
     }
+
+    public User me() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null ||
+                !(authentication.getPrincipal() instanceof User)) {
+            throw new RuntimeException("Usuário não autenticado");
+        }
+
+        return (User) authentication.getPrincipal();
+    }
+
 }
