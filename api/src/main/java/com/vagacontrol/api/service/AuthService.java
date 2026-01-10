@@ -59,8 +59,8 @@ public class AuthService {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication == null ||
-                !(authentication.getPrincipal() instanceof User)) {
+        if (authentication == null
+                || !(authentication.getPrincipal() instanceof User)) {
             throw new RuntimeException("Usuário não autenticado");
         }
 

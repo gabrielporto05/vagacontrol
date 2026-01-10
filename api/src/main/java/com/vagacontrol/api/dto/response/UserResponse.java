@@ -6,9 +6,10 @@ import java.util.UUID;
 import com.vagacontrol.api.entity.Role;
 
 public record UserResponse(
-                UUID id,
-                String name,
-                String email,
-                Role role,
-                LocalDateTime createdAt) {
+        UUID id,
+        String name,
+        String email,
+        Role role,
+        LocalDateTime createdAt) {
+
 }
