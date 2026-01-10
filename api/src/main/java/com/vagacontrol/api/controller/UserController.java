@@ -9,34 +9,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vagacontrol.api.dto.response.ApiResponse;
 import com.vagacontrol.api.dto.response.UserResponse;
-import com.vagacontrol.api.repository.UserRepository;
+import com.vagacontrol.api.service.UserService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
 public class UserController {
 
-    private final UserRepository userRepository;
+        private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+        @GetMapping
+        public ResponseEntity<ApiResponse<List<UserResponse>>> getAllUsers() {
 
-    @GetMapping
-    public ResponseEntity<ApiResponse<List<UserResponse>>> getAllUsers() {
-
-        List<UserResponse> users = userRepository.findAll()
-                .stream()
-                .map(user -> new UserResponse(
-                        user.getName(),
-                        user.getEmail(),
-                        user.getRole(),
-                        user.getCreatedAt()))
-                .toList();
-
-        return ResponseEntity.ok(
-                new ApiResponse<>(
-                        "Usuários retornados com sucesso",
-                        users));
-    }
-
+                return ResponseEntity
+                                .ok(new ApiResponse<>("Usuários retornados com sucesso", userService.getAllUsers()));
+        }
 }
