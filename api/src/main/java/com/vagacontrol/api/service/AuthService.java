@@ -12,6 +12,7 @@ import com.vagacontrol.api.dto.request.LoginRequest;
 import com.vagacontrol.api.dto.request.RegisterRequest;
 import com.vagacontrol.api.dto.response.LoginResponse;
 import com.vagacontrol.api.dto.response.RegisterResponse;
+import com.vagacontrol.api.entity.Role;
 import com.vagacontrol.api.entity.User;
 import com.vagacontrol.api.repository.UserRepository;
 
@@ -41,7 +42,12 @@ public class AuthService {
 
     public RegisterResponse register(RegisterRequest request) {
 
+        if (request.role() == Role.ADMIN) {
+            throw new RuntimeException("Não é permitido criar ADMIN via registro");
+        }
+
         User user = new User();
+
         user.setName(request.name());
         user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password()));

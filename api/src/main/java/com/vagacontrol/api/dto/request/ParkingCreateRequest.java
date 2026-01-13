@@ -1,5 +1,7 @@
 package com.vagacontrol.api.dto.request;
 
+import java.util.UUID;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,7 +12,8 @@ public record ParkingCreateRequest(
         String address,
         @NotNull(message = "Total de vagas é obrigatório")
         Integer totalSpots,
-        Boolean active
+        Boolean active,
+        UUID ownerId
         ) {
 
 }

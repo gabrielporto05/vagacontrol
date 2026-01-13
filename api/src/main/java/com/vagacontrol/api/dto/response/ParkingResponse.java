@@ -5,6 +5,7 @@ import java.util.UUID;
 
 public record ParkingResponse(
         UUID id,
+        UUID ownerId,
         String name,
         String address,
         Integer totalSpots,
