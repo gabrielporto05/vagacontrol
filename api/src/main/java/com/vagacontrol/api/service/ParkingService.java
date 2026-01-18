@@ -10,8 +10,8 @@ import com.vagacontrol.api.config.SecurityUtils;
 import com.vagacontrol.api.dto.request.ParkingCreateRequest;
 import com.vagacontrol.api.dto.response.ParkingResponse;
 import com.vagacontrol.api.entity.Parking;
-import com.vagacontrol.api.entity.Role;
 import com.vagacontrol.api.entity.User;
+import com.vagacontrol.api.entity.enums.Role;
 import com.vagacontrol.api.repository.ParkingRepository;
 import com.vagacontrol.api.repository.UserRepository;
 

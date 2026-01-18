@@ -1,4 +1,4 @@
-package com.vagacontrol.api.entity;
+package com.vagacontrol.api.entity.enums;
 
 public enum Role {
     ADMIN,

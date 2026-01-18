@@ -5,14 +5,15 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.vagacontrol.api.entity.enums.VehicleType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,33 +22,30 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "parkings")
+@Table(name = "vehicles")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Parking {
+public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", nullable = false)
-    private User owner;
+    @Column(nullable = false)
+    private String plate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private VehicleType type;
 
     @Column(nullable = false)
-    private String name;
+    private String color;
 
     @Column(nullable = false)
-    private String address;
-
-    @Column(name = "total_spots", nullable = false)
-    private Integer totalSpots;
-
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private Boolean active;
+    private String model;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

@@ -1,6 +1,6 @@
 package com.vagacontrol.api.dto.request;
 
-import com.vagacontrol.api.entity.Role;
+import com.vagacontrol.api.entity.enums.Role;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

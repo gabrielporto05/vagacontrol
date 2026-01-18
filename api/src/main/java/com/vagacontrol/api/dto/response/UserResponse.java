@@ -3,7 +3,7 @@ package com.vagacontrol.api.dto.response;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.vagacontrol.api.entity.Role;
+import com.vagacontrol.api.entity.enums.Role;
 
 public record UserResponse(
         UUID id,

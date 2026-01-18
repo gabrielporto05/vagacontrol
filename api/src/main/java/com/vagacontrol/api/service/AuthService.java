@@ -12,8 +12,8 @@ import com.vagacontrol.api.dto.request.LoginRequest;
 import com.vagacontrol.api.dto.request.RegisterRequest;
 import com.vagacontrol.api.dto.response.LoginResponse;
 import com.vagacontrol.api.dto.response.RegisterResponse;
-import com.vagacontrol.api.entity.Role;
 import com.vagacontrol.api.entity.User;
+import com.vagacontrol.api.entity.enums.Role;
 import com.vagacontrol.api.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;

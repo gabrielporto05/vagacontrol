@@ -1,6 +1,6 @@
 package com.vagacontrol.api.dto.response;
 
-import com.vagacontrol.api.entity.Role;
+import com.vagacontrol.api.entity.enums.Role;
 
 public record RegisterResponse(
         String name,
