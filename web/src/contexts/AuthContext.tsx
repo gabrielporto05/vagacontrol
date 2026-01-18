@@ -6,42 +6,45 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { removeToken, setToken } from '@/utils/token'
 import { useRouter } from 'next/navigation'
 
-export const initialAuthContext: AuthContextType = {
-  user: null,
-  signIn: async () => {},
-  signUp: async () => {},
-  signOut: () => {}
-}
-
-const AuthContext = createContext<AuthContextType>(initialAuthContext)
-
+const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 export const useAuth = () => useContext(AuthContext)
 
 export const AuthProvider = ({ children }: ChildrenType) => {
   const [user, setUser] = useState<UserType | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [initialLoading, setInitialLoading] = useState(true)
   const router = useRouter()
 
-  useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const userData = await getCurrentUser()
-        setUser(userData)
-      } catch {
-        removeToken()
-      } finally {
-        setLoading(false)
-      }
+  const loadUser = async () => {
+    try {
+      const userData = await getCurrentUser()
+      setUser(userData)
+    } catch {
+      removeToken()
+      setUser(null)
+    } finally {
+      setInitialLoading(false)
     }
+  }
 
+  useEffect(() => {
     loadUser()
   }, [])
 
   const signIn = async (credentials: SignInCredentials) => {
-    const { access_token, user } = await signInService(credentials)
-    setToken(access_token)
-    setUser(user)
-    router.push('/dashboard')
+    try {
+      const { access_token } = await signInService(credentials)
+
+      setToken(access_token)
+
+      const userData = await getCurrentUser()
+      setUser(userData)
+
+      router.push('/dashboard')
+    } catch (error) {
+      removeToken()
+      setUser(null)
+      throw error
+    }
   }
 
   const signUp = async (credentials: SignUpCredentials) => {
@@ -54,7 +57,7 @@ export const AuthProvider = ({ children }: ChildrenType) => {
     router.push('/login')
   }
 
-  if (loading) return null
+  if (initialLoading) return null
 
   return (
     <AuthContext.Provider

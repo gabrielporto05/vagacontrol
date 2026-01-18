@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
-import Link from 'next/link'
 
 const LoginPage = () => {
   const { signIn } = useAuth()
@@ -29,6 +28,7 @@ const LoginPage = () => {
     try {
       setLoading(true)
       setError(null)
+
       await signIn(data)
     } catch {
       setError('E-mail ou senha inválidos. Por favor, tente novamente.')
@@ -147,10 +147,9 @@ const LoginPage = () => {
                   <Input
                     placeholder='seu@email.com'
                     type='email'
-                    className='pl-10 h-12 border-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg'
+                    className='h-12 border-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg'
                     {...register('email')}
                   />
-                  <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400' />
                 </div>
                 {errors.email && (
                   <p className='text-sm text-red-600 mt-1 flex items-center gap-1'>{errors.email.message}</p>
@@ -166,10 +165,9 @@ const LoginPage = () => {
                   <Input
                     placeholder='••••••••'
                     type={showPassword ? 'text' : 'password'}
-                    className='pl-10 pr-10 h-12 border-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg'
+                    className='pr-10 h-12 border-slate-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg'
                     {...register('password')}
                   />
-                  <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400' />
                   <button
                     type='button'
                     onClick={() => setShowPassword(!showPassword)}
@@ -183,7 +181,7 @@ const LoginPage = () => {
                 )}
               </div>
 
-              <div className='flex items-center justify-between text-sm'>
+              {/* <div className='flex items-center justify-between text-sm'>
                 <label className='flex items-center gap-2 cursor-pointer'>
                   <input type='checkbox' className='rounded border-slate-300 text-blue-600 focus:ring-blue-500' />
                   <span className='text-slate-600'>Lembrar-me</span>
@@ -194,7 +192,7 @@ const LoginPage = () => {
                 >
                   Esqueceu a senha?
                 </Link>
-              </div>
+              </div> */}
 
               {error && (
                 <div className='p-3 rounded-lg bg-red-50 border border-red-200'>

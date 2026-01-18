@@ -29,7 +29,7 @@ export type ChildrenType = {
 }
 
 export type AuthResponseType = {
-  user: UserType
+  message: string
   access_token: string
 }
 
