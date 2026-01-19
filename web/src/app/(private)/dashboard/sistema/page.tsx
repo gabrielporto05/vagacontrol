@@ -1,11 +1,11 @@
 'use client'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { BarChart3, Car, Clock, DollarSign, TrendingUp, AlertCircle, Users, Zap } from 'lucide-react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 
-export default function DashboardContent() {
+const DashboardSistema = () => {
   // Dados de exemplo
   const stats = [
     { title: 'Vagas Livres', value: '12', icon: Car, color: 'text-green-600', bgColor: 'bg-green-50' },
@@ -200,3 +200,5 @@ export default function DashboardContent() {
     </div>
   )
 }
+
+export default DashboardSistema

@@ -1,39 +1,62 @@
 'use client'
 
-import {
-  Home,
-  ParkingCircle,
-  Users,
-  Calendar,
-  CreditCard,
-  BarChart3,
-  Settings,
-  LogOut,
-  Menu,
-  Building,
-  Shield
-} from 'lucide-react'
-import { useAuth } from '@/contexts/AuthContext'
+import { Home, ParkingCircle, BarChart3, Settings, LogOut, Menu, Shield, Car } from 'lucide-react'
 import { useRouter, usePathname } from 'next/navigation'
+import { useAuth } from '@/contexts/AuthContext'
+import Loading from '@/components/Loading'
+import { RoleEnum } from '@/types/User'
 import { cn } from '@/lib/utils'
 
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: Home },
-  { name: 'Estacionamentos', href: '#estacionamentos', icon: ParkingCircle },
-  { name: 'Proprietários', href: '#proprietarios', icon: Users },
-  { name: 'Porteiros', href: '#porteiros', icon: Shield },
-  { name: 'Mensalistas', href: '#mensalistas', icon: Calendar },
-  { name: 'Controle de Vagas', href: '#vagas', icon: Building },
-  { name: 'Pagamentos', href: '#pagamentos', icon: CreditCard },
-  { name: 'Relatórios', href: '#relatorios', icon: BarChart3 },
-  { name: 'Configurações', href: '#configuracoes', icon: Settings }
+  {
+    name: 'Dashboard Sistema',
+    href: '/dashboard/sistema',
+    icon: Home,
+    roles: [RoleEnum.ADMIN]
+  },
+  {
+    name: 'Estacionamentos',
+    icon: ParkingCircle,
+    href: '/dashboard/parkings',
+    roles: [RoleEnum.ADMIN]
+  },
+  {
+    name: 'Dashboard Estacionamento',
+    href: '/dashboard/parking/[id]',
+    icon: ParkingCircle,
+    roles: [RoleEnum.ADMIN, RoleEnum.PROPRIETARIO]
+  },
+  {
+    name: 'Configurações Estacionamento',
+    href: '/dashboard/parking/[id]/configuracoes',
+    icon: Settings,
+    roles: [RoleEnum.ADMIN, RoleEnum.PROPRIETARIO]
+  },
+  {
+    name: 'Porteiros',
+    href: '/dashboard/porteiros',
+    icon: Shield,
+    roles: [RoleEnum.ADMIN, RoleEnum.PROPRIETARIO]
+  },
+  {
+    name: 'Relatórios',
+    href: '/dashboard/relatorios',
+    icon: BarChart3,
+    roles: [RoleEnum.ADMIN, RoleEnum.PROPRIETARIO]
+  },
+  {
+    name: 'Entradas / Saídas',
+    href: '/dashboard/controle',
+    icon: Car,
+    roles: [RoleEnum.ADMIN, RoleEnum.PROPRIETARIO, RoleEnum.PORTEIRO]
+  }
 ]
 
 interface SidebarProps {
   onClose?: () => void
 }
 
-export default function Sidebar({ onClose }: SidebarProps) {
+const Sidebar = ({ onClose }: SidebarProps) => {
   const { user, signOut } = useAuth()
   const router = useRouter()
   const pathname = usePathname()
@@ -46,12 +69,15 @@ export default function Sidebar({ onClose }: SidebarProps) {
     // Para links âncora, rolar suavemente
   }
 
+  if (!user) return <Loading />
+
+  const allowedNavigation = navigation.filter(item => item.roles.includes(user.role))
+
   return (
     <div className='flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4'>
-      {/* Logo */}
       <div className='flex h-16 shrink-0 items-center gap-3'>
         <div className='w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-lg flex items-center justify-center'>
-          <ParkingCircle className='w-6 h-6 text-white' />
+          <Car className='w-6 h-6 text-white' />
         </div>
         <div>
           <h1 className='text-xl font-bold text-gray-900'>VagaControl</h1>
@@ -64,26 +90,26 @@ export default function Sidebar({ onClose }: SidebarProps) {
         )}
       </div>
 
-      {/* Navegação */}
       <nav className='flex flex-1 flex-col'>
         <ul role='list' className='flex flex-1 flex-col gap-y-7'>
           <li>
             <ul role='list' className='-mx-2 space-y-1'>
-              {navigation.map(item => {
+              {allowedNavigation.map(item => {
                 const Icon = item.icon
                 const isActive = pathname === item.href
+
                 return (
                   <li key={item.name}>
                     <button
                       onClick={() => handleNavigation(item.href)}
                       className={cn(
-                        'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold w-full text-left',
-                        isActive ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                        'group flex gap-x-3 rounded-md p-2 text-sm font-semibold w-full',
+                        isActive ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
                       )}
                     >
                       <Icon
                         className={cn(
-                          'h-6 w-6 shrink-0',
+                          'h-6 w-6',
                           isActive ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600'
                         )}
                       />
@@ -95,11 +121,10 @@ export default function Sidebar({ onClose }: SidebarProps) {
             </ul>
           </li>
 
-          {/* Perfil do usuário */}
           <li className='-mx-6 mt-auto'>
             <div className='flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50'>
               <div className='h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center'>
-                <span className='text-white font-medium'>{user?.name?.charAt(0) || user?.email?.charAt(0) || 'U'}</span>
+                <span className='text-white font-medium'>{user.name.charAt(0)}</span>
               </div>
               <div className='flex-1 min-w-0'>
                 <p className='font-semibold text-gray-900'>{user?.name || 'Usuário'}</p>
@@ -115,3 +140,5 @@ export default function Sidebar({ onClose }: SidebarProps) {
     </div>
   )
 }
+
+export default Sidebar

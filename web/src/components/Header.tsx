@@ -3,13 +3,16 @@
 import { Bell, Menu, Search } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { Button } from '@/components/ui/button'
+import Loading from '@/components/Loading'
 
 interface HeaderProps {
   onMenuClick: () => void
 }
 
-export default function Header({ onMenuClick }: HeaderProps) {
+const Header = ({ onMenuClick }: HeaderProps) => {
   const { user } = useAuth()
+
+  if (!user) return <Loading />
 
   return (
     <header className='sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8'>
@@ -18,29 +21,24 @@ export default function Header({ onMenuClick }: HeaderProps) {
         <Menu className='h-6 w-6' />
       </button>
 
-      {/* Separador */}
-      <div className='h-6 w-px bg-gray-200 lg:hidden' />
-
-      <div className='flex flex-1 gap-x-4 self-stretch lg:gap-x-6'>
+      <div className='flex flex-1 gap-x-4 self-stretch lg:gap-x-6 items-center justify-end'>
         {/* Search */}
-        <div className='relative flex flex-1'>
+        {/* <div className='relative flex flex-1'>
           <Search className='pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400' />
           <input
             type='search'
             placeholder='Buscar...'
             className='block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6'
           />
-        </div>
+        </div> */}
 
         <div className='flex items-center gap-x-4 lg:gap-x-6'>
-          {/* Botão de notificações */}
           <button type='button' className='-m-2.5 p-2.5 text-gray-400 hover:text-gray-500 relative'>
             <span className='sr-only'>Ver notificações</span>
             <Bell className='h-6 w-6' />
             <span className='absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white' />
           </button>
 
-          {/* Botões de ação */}
           <div className='hidden sm:flex sm:items-center sm:gap-x-3'>
             <Button variant='outline' size='sm' className='border-blue-600 text-blue-600 hover:bg-blue-50'>
               Registrar Entrada
@@ -53,7 +51,6 @@ export default function Header({ onMenuClick }: HeaderProps) {
             </Button>
           </div>
 
-          {/* Separador */}
           <div className='hidden lg:block lg:h-6 lg:w-px lg:bg-gray-200' />
 
           {/* Informações do estacionamento atual */}
@@ -70,3 +67,5 @@ export default function Header({ onMenuClick }: HeaderProps) {
     </header>
   )
 }
+
+export default Header

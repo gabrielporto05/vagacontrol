@@ -3,6 +3,7 @@ export type UserType = {
   name: string
   email: string
   role: RoleEnum
+  parkingId?: string | null // ID do estacionamento associado, apenas para porteiros
   createdAt: string
 }
 

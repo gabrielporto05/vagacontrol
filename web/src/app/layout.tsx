@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description: 'Aplicação para controle de vagas de estacionamento e garagens.'
 }
 
-export default function RootLayout({ children }: Readonly<ChildrenType>) {
+const RootLayout = ({ children }: Readonly<ChildrenType>) => {
   return (
     <html lang='pt-BR'>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
@@ -28,3 +28,5 @@ export default function RootLayout({ children }: Readonly<ChildrenType>) {
     </html>
   )
 }
+
+export default RootLayout
