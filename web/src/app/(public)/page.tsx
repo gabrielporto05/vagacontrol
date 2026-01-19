@@ -98,7 +98,8 @@ const LandingPage = () => {
 
   return (
     <div className='min-h-screen'>
-      {/* Hero Section */}
+      <h1 className='hidden'>VagaControl - Sistema Completo para Gestão de Estacionamentos</h1>
+
       <section className='relative overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white'>
         <div className='absolute inset-0 bg-black/40 z-0' />
         <div className='absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-br from-blue-600/20 to-transparent rounded-full blur-3xl' />
